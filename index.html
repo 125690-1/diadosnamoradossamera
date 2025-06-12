@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -12,10 +13,7 @@
       color: #444;
       overflow-x: hidden;
     }
-    header {
-      text-align: center;
-      padding: 60px 20px 30px;
-    }
+    header { text-align: center; padding: 60px 20px 30px; }
     header h1 {
       font-size: 2.8em;
       color: #d63384;
@@ -31,14 +29,7 @@
       text-align: center;
       animation: fadeIn 2s ease-in;
     }
-    .mensagem p {
-      font-size: 1.2em;
-      line-height: 1.6em;
-    }
-    .foto-capa {
-      text-align: center;
-      margin-top: 30px;
-    }
+    .foto-capa { text-align: center; margin-top: 30px; }
     .foto-capa img {
       width: 85%;
       max-width: 400px;
@@ -59,9 +50,6 @@
       margin: 10px;
       cursor: pointer;
       transition: background 0.3s ease;
-    }
-    button:hover {
-      background: #e60073;
     }
     .galeria, .surpresa {
       display: none;
@@ -102,51 +90,48 @@
       border-radius: 50%;
       position: absolute;
     }
-    .coracao::before {
-      top: -10px;
-      left: 0;
-    }
-    .coracao::after {
-      left: -10px;
-      top: 0;
-    }
+    .coracao::before { top: -10px; left: 0; }
+    .coracao::after { left: -10px; top: 0; }
     @keyframes subir {
       0% { bottom: 0; opacity: 1; }
       100% { bottom: 100%; opacity: 0; transform: translateX(50px); }
-    }
-    @keyframes fadeInDown {
-      0% { opacity: 0; transform: translateY(-30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
   <header><h1>Feliz Dia dos Namorados 💖</h1></header>
+
+  <div class="botoes">
+    <button onclick="tocarPlaylist()">Clique aqui para começar ouvindo nossa trilha sonora 🎶</button>
+  </div>
+
   <div class="foto-capa"><img src="fotos_namorada_full/1.jpeg" alt="Foto do casal"></div>
+
   <div class="mensagem">
     <p>Eu sou imensamente grato por ter você na minha vida. Você não só caminha ao meu lado, mas me apoia nas minhas dificuldades, me corrige quando preciso e divide comigo a vida de um jeito tão leve e sincero.</p>
     <p>Você é uma garota incrivelmente especial. Eu olho pra trás e vejo que escolher você foi uma das melhores decisões que já tomei. Não me arrependo de nada, só agradeço por cada momento ao seu lado.</p>
     <p>Obrigado por ser minha namorada, minha parceira, minha fortaleza e minha melhor amiga. Eu te amo 💖</p>
   </div>
+
   <div class="botoes">
     <button onclick="mostrarGaleria()">Nosso Álbum 📸</button>
     <button onclick="mostrarSurpresa()">Clique aqui se me ama 💘</button>
   </div>
+
   <div class="galeria" id="galeria"></div>
-  <div class="surpresa" id="surpresa"><h2>Surpresa pra você 😍</h2><p>Você é meu mundo, minha razão, minha paz. 💓</p><div id="fotosSurpresa"></div></div>
+  <div class="surpresa" id="surpresa">
+    <h2>Surpresa pra você 😍</h2>
+    <p>Você é meu mundo, minha razão, minha paz. 💓</p>
+    <div id="fotosSurpresa"></div>
+  </div>
   <div class="coracoes" id="coracoes"></div>
-  <audio id="musica" controls style="display:none">
-    <source src="A Nossa Praia é AMAR!.mp3" type="audio/mp3"><source src="Entregador De Flores........#diegoevictorhugo #entregadordeflor #musica #sertanejo #fy #status.mp3" type="audio/mp3"><source src="Zé Neto e Cristiano - escolhas.mp3" type="audio/mp3"><source src="Ferrugem - Minha namorada  #pagode #brasil #explore #music #samba #tiktok.mp3" type="audio/mp3">
-    Seu navegador não suporta áudio.
-  </audio>
+
+  <audio id="musica" style="display: none"></audio>
+
   <script>
-    const todasFotos = ['1.jpeg', '10.jpeg', '11.jpeg', '12.jpeg', '13.jpeg', '14.jpeg', '15.jpeg', '16.jpeg', '17.jpeg', '18.jpeg', '19.jpeg', '2.jpeg', '20.jpeg', '21.jpeg', '22.jpeg', '23.jpeg', '24.jpeg', '25.jpeg', '26.jpeg', '27.jpeg', '28.jpeg', '3.jpeg', '4.jpeg', '5.jpeg', '6.jpeg', '7.jpeg', '8.jpeg', '9.jpeg'];
-    const fotosGaleria = todasFotos.slice(1, todasFotos.length - 5);
-    const fotosSurpresa = todasFotos.slice(-5);
+    const todasFotos = Array.from({length: 28}, (_, i) => `${i+1}.jpeg`);
+    const fotosGaleria = todasFotos.slice(1, 23);
+    const fotosSurpresa = todasFotos.slice(23);
 
     function mostrarGaleria() {
       const galeria = document.getElementById('galeria');
@@ -158,12 +143,29 @@
       const container = document.getElementById('fotosSurpresa');
       container.innerHTML = fotosSurpresa.map(img => `<img src="fotos_namorada_full/${img}">`).join('');
       document.getElementById('surpresa').style.display = 'block';
-      tocarMusica();
       animarCoracoes();
     }
 
-    function tocarMusica() {
-      document.getElementById('musica').play();
+    function tocarPlaylist() {
+      const audio = document.getElementById('musica');
+      const playlist = [
+        "a-nossa-praia-é-amar.mp3",
+        "entregador-de-flores.mp3",
+        "escolhas.mp3",
+        "minha-namorada-ferrugem.mp3"
+      ];
+      let index = 0;
+
+      function tocarProxima() {
+        if (index < playlist.length) {
+          audio.src = playlist[index];
+          audio.play();
+          index++;
+        }
+      }
+
+      audio.onended = tocarProxima;
+      tocarProxima();
     }
 
     function animarCoracoes() {
